@@ -71,17 +71,22 @@ TBitField& TBitField::operator=(const TBitField& bf) {
 	
 }
 
-int TBitField::operator==(const TBitField& bf) const {
+int TBitField::operator==(const TBitField& bf) const // сравнение
+{
 	if (BitLen != bf.BitLen)
 		return 0;
-	for (int i = 0; i < MemLen; i++) {
-		if (pMem[i] != bf.pMem[i])
-			return 0;   
-	}
+	int k = 0;
+	for (int i = 0; i < MemLen; i++)
+		if (pMem[i] != bf.pMem[i]) {
+			return 0;
+		}
 	return 1;
 }
-int TBitField::operator!=(const TBitField& bf) const {
+
+int TBitField::operator!=(const TBitField& bf) const // сравнение
+{
 	return !((*this) == bf);
+
 }
 
 TBitField TBitField::operator|(const TBitField& bf) // операция "или"
@@ -139,15 +144,21 @@ TBitField TBitField::operator~(void) // отрицание
 
 // ввод/вывод
 
-istream& operator>>(istream& is, TBitField& bf) // ввод
+istream& operator>>(istream& istr, TBitField& bf) // ввод
 {
-	for (int i = 0; i < bf.GetLength(); ++i)
-	{
-		int val;
-		is >> val;
-		if (val > bf.GetLength() || val < 0)
-			throw "Wrong element ";
-		bf.SetBit(val);
+	int tmp;
+	for (int i = 0; i < bf.BitLen; i++) {
+		istr >> tmp;
+		if ((tmp != 0) && (tmp != 1)) {
+			throw "The bit cannot take such a value";
+		}
+
+		if (tmp == 0) {
+			bf.ClrBit(i);
+		}
+		else {
+			bf.SetBit(i);
+		}
 	}
-	return is;
+	return istr;
 }
