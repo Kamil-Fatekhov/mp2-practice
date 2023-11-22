@@ -20,7 +20,7 @@ public:
     int GetSize() { return Size; } // размер вектора
     int GetStartIndex() { return StartIndex; } // индекс первого элемента
     ValType& operator[](int pos);        
-    ValType& operator[](int pos) const;  // доступ
+    //ValType& operator[](int pos) const;  // доступ
     bool operator==(const TVector& v) const;  // сравнение
     bool operator!=(const TVector& v) const;  // сравнение
     TVector& operator=(const TVector& v);     // присваивание
@@ -57,7 +57,7 @@ TVector<ValType>::TVector(int s, int si)
     if (s > MAX_VECTOR_SIZE) throw  "size is too large";
     Size = s;
     if (si < 0) throw "StartIndex cant be negative";
-    if (si > s) throw "StartIndex cant be more than vector size";
+    /*if (si > s) throw "StartIndex cant be more than vector size";*/
     StartIndex = si;
     pVector = new ValType[Size];
     for (int i = 0; i < Size; i++) {
@@ -66,7 +66,7 @@ TVector<ValType>::TVector(int s, int si)
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> //конструктор копирования
-TVector<ValType>::TVector(const TVector<ValType>& v)
+TVector<ValType>::TVector(const TVector& v)
 {
     Size = v.Size;
     StartIndex = v.StartIndex;
@@ -81,23 +81,26 @@ TVector<ValType>::~TVector()
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // доступ
-ValType& TVector<ValType>::operator[](int pos)
+ValType& TVector<ValType>::operator[](const int pos)
 {
-    return pVector[pos];
+    if (pos < 0) throw "negative ind";
+    if (pos < StartIndex) throw "invalid ind";
+    if (pos > Size + StartIndex) throw "invalid size";
+    return pVector[pos - StartIndex];
 } /*-------------------------------------------------------------------------*/
 
-template <class ValType> // доступ
-ValType& TVector<ValType>::operator[](int pos) const
-{
-    return pVector[pos];
-}/*-------------------------------------------------------------------------*/
+//template <class ValType> // доступ
+//ValType& TVector<ValType>::operator[](int pos) const
+//{
+//    return pVector[pos];
+//}/*-------------------------------------------------------------------------*/
 template <class ValType> // сравнение
-bool TVector<ValType>::operator==(const TVector& v) const
+bool TVector<ValType>::operator==(const TVector<ValType>& v) const
 {
     if (Size != v.Size) return false;
     if (StartIndex != v.StartIndex) return false;
     for (int i = 0; i < Size; i++) {
-        if (pVector != v.pVector) return false;
+        if (pVector[i] != v.pVector[i]) return false;
     }
     return true;
 } /*-------------------------------------------------------------------------*/

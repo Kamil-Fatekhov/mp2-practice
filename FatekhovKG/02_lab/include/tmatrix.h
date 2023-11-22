@@ -17,7 +17,7 @@ public:
     TMatrix(const TVector<TVector<ValType> >& mt); // преобразование типа
     bool operator==(const TMatrix& mt) const;      // сравнение
     bool operator!=(const TMatrix& mt) const;      // сравнение
-    TMatrix& operator= (const TMatrix& mt);        // присваивание
+   const TMatrix& operator= (const TMatrix& mt);        // присваивание
     TMatrix  operator+ (const TMatrix& mt);        // сложение
     TMatrix  operator- (const TMatrix& mt);        // вычитание
     TMatrix  operator* (const TMatrix& mt);        // умножение
@@ -67,16 +67,9 @@ bool TMatrix<ValType>::operator!=(const TMatrix<ValType>& mt) const
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // присваивание
-TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType>& mt)
+const TMatrix<ValType>& TMatrix<ValType>::operator=(const TMatrix<ValType>& mt)
 {
-    if (this != &mt) { if (Size != mt.Size) {
-    delete[] pVector;
-    pVector = new TVector<ValType>[mt.Size];
-    }
-    Size = mt.Size;
-    StartIndex = mt.StartIndex;
-    for (int i = 0; i < Size; i++) pVector[i] = mt.pVector[i];
-    } return *this;
+    return TVector <TVector<ValType>>::operator=(mt);
 } /*-------------------------------------------------------------------------*/
 
 template <class ValType> // сложение
@@ -97,7 +90,7 @@ TMatrix<ValType> TMatrix<ValType>::operator*(const TMatrix& mt)
 {
     
     if (Size != mt.Size) throw "Not equal sizes";
-    TMatrix res(Size);
+    TMatrix<ValType> res(Size),tmp(mt);
 
     for (int i = 0; i < Size; ++i) {
         for (int j = i; j < Size; ++j) {
@@ -108,7 +101,7 @@ TMatrix<ValType> TMatrix<ValType>::operator*(const TMatrix& mt)
     for (int i = 0; i < Size; ++i) {
         for (int j = i; j < Size; ++j) {
             for (int k = i; k <= j; ++k) {
-                res[i][j - i] += (*this)[i][k - i] * mt[k][j - k];
+                res[i][j - i] += (*this)[i][k - i] * tmp[k][j - k];
             }
         }
     }

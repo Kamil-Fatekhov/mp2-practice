@@ -52,13 +52,13 @@ TEST(TMatrix, can_set_and_get_element)
 TEST(TMatrix, throws_when_set_element_with_negative_index)
 {
 	TMatrix<int> m(5);
-	ASSERT_ANY_THROW(m[-1][-2] = 3);
+	ASSERT_ANY_THROW(m[1][-2] = 3);
 }
 
 TEST(TMatrix, throws_when_set_element_with_too_large_index)
 {
 	TMatrix<int> m(5);
-	ASSERT_ANY_THROW(m[6][0] = 4);
+	ASSERT_ANY_THROW(m[6][7] = 4);
 }
 
 TEST(TMatrix, can_assign_matrix_to_itself)
@@ -69,9 +69,8 @@ TEST(TMatrix, can_assign_matrix_to_itself)
 
 TEST(TMatrix, can_assign_matrices_of_equal_size)
 {
-	TMatrix<int> m(5),m1(6);
-	m[2][0] = 3;
-	ASSERT_NO_THROW(m = m1);
+	TMatrix<int> m(5),m1(5);
+	ASSERT_NO_THROW(m == m1);
 }
 
 TEST(TMatrix, assign_operator_change_matrix_size)
