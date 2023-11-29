@@ -4,10 +4,10 @@
 
 TEST(TVector, can_create_vector_with_positive_length)
 {
-	ASSERT_NO_THROW(TVector<int> v(5));
+	ASSERT_NO_THROW(TVector<int> v(5)); // пара со стартовым индексом
 }
 
-TEST(TVector, cant_create_too_large_vector)
+TEST(TVector, cant_create_too_large_vector) //!!!!
 {
 	ASSERT_ANY_THROW(TVector<int> v(MAX_VECTOR_SIZE + 1));
 }
@@ -34,7 +34,7 @@ TEST(TVector, copied_vector_is_equal_to_source_one)
 	TVector<int> v(10);
 	v[0] = 4;
 	TVector<int> v1(v);
-	EXPECT_EQ(v,v1);
+	EXPECT_EQ(v,v1); // own mem
 }
 
 
@@ -91,7 +91,7 @@ TEST(TVector, can_assign_vectors_of_equal_size)
 TEST(TVector, can_assign_vectors_of_different_size)
 {
 	TVector<int> v(5), v1(6);
-	ASSERT_NO_THROW(v = v1);
+	ASSERT_NO_THROW(v = v1); //EXPECT_EQ
 }
 
 TEST(TVector, compare_equal_vectors_return_true)
