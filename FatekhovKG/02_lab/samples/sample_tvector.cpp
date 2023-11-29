@@ -1,13 +1,23 @@
 #include "tvector.h"
 
 void main() {
-	TVector<int> b(4, 0);
-	TVector<int> a(4, 0);
-	int c;
-	cin >> b;
-	cout << b<<endl;
+	TVector<int> a(4), b(4);
+	cout << " input a(4) ";
 	cin >> a;
-	cout << a << endl;
-	c = a * b;
-	cout << c;
+	b[0] = 1;
+	b[1] = 1;
+	b[2] = 1;
+	cout << "a - >" << a << endl;
+	cout << "b - >" << b << endl;
+	cout << "a + b - >" << a + b << endl;
+	cout << "a - b - >" << a - b << endl;
+	cout << "a * b - >" << a * b << endl;
+	cout << "a * 5 - >" << a * 5  << endl;
+	cout << "a == b - >" << (a == b) << endl;
+	cout << "a != b - >" << (a != b) << endl;
+	cout << "a = b - >" << (a = b) << endl;
+	cout << "a + 2 - >" << a + 2 << endl;
+	cout << "a - 5 - >" << a - 5 << endl;
+	cout << "a.GetStartIndex()- >" << a.GetStartIndex() << endl;
+	cout << "a.GetSize()- >" << a.GetSize() << endl;
 }

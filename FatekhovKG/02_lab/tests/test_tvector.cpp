@@ -62,12 +62,14 @@ TEST(TVector, can_set_and_get_element)
 
 TEST(TVector, throws_when_set_element_with_negative_index)
 {
-	ASSERT_ANY_THROW(TVector<int> v(4, -2));
+	TVector<int> v(4, 3);
+	ASSERT_ANY_THROW(v[-3]);
 }
 
 TEST(TVector, throws_when_set_element_with_too_large_index)
 {
-	ASSERT_ANY_THROW(TVector<int> v(4, MAX_VECTOR_SIZE+1));
+	TVector<int> v(2);
+	ASSERT_ANY_THROW(v[5]);
 }
 
 TEST(TVector, can_assign_vector_to_itself)

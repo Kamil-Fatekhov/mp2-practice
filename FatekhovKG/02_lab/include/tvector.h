@@ -53,11 +53,9 @@ public:
 template <class ValType>
 TVector<ValType>::TVector(int s, int si)
 {
-    if (s < 0) throw "Size cant be negative";
-    if (s > MAX_VECTOR_SIZE) throw  "size is too large";
+    if (s < 0 || s > MAX_VECTOR_SIZE) throw "invalid size";
     Size = s;
-    if (si < 0) throw "StartIndex cant be negative";
-    /*if (si > s) throw "StartIndex cant be more than vector size";*/
+    if (si < 0 ) throw "StartIndex cant be negative";
     StartIndex = si;
     pVector = new ValType[Size];
     for (int i = 0; i < Size; i++) {
@@ -83,9 +81,8 @@ TVector<ValType>::~TVector()
 template <class ValType> // доступ
 ValType& TVector<ValType>::operator[](const int pos)
 {
-    if (pos < 0) throw "negative ind";
+    if (pos < 0 || pos >= Size + StartIndex) throw "invalid index";
     if (pos < StartIndex) throw "invalid ind";
-    if (pos > Size + StartIndex) throw "invalid size";
     return pVector[pos - StartIndex];
 } /*-------------------------------------------------------------------------*/
 

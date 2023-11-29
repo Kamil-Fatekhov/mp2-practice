@@ -90,23 +90,19 @@ TMatrix<ValType> TMatrix<ValType>::operator*(const TMatrix& mt)
 {
     
     if (Size != mt.Size) throw "Not equal sizes";
-    TMatrix<ValType> res(Size),tmp(mt);
-
-    for (int i = 0; i < Size; ++i) {
-        for (int j = i; j < Size; ++j) {
-            res[i][j - i] = 0;
-        }
-    }
-
-    for (int i = 0; i < Size; ++i) {
-        for (int j = i; j < Size; ++j) {
-            for (int k = i; k <= j; ++k) {
-                res[i][j - i] += (*this)[i][k - i] * tmp[k][j - k];
+    if (StartIndex != mt.StartIndex) throw "Not equal index";
+    TMatrix<ValType> tmp(mt), res(Size);
+    for (int i = 0; i < Size; i++)
+    {
+        for (int j = i; j < Size; j++)
+        {
+            for (int k = i; k <= j; k++)
+            {
+                res[i][j] += (*this)[i][k] * tmp[k][j];
             }
         }
+
     }
-
-
     return res;
 }
 
