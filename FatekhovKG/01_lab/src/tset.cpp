@@ -65,7 +65,15 @@ TSet& TSet::operator=(const TSet& s)
 
 int TSet::operator==(const TSet& s) const 
 {
-	return (BitField == s.BitField);
+	if (MaxPower != s.GetMaxPower())
+		return 0;
+
+	for (int i = 0; i < MaxPower; ++i)
+	{
+		if (BitField.GetBit(i) != s.BitField.GetBit(i))
+			return 0;
+	}
+	return 1;
 }
 
 int TSet::operator!=(const TSet& s) const 
@@ -75,8 +83,9 @@ int TSet::operator!=(const TSet& s) const
 
 TSet TSet::operator+(const TSet& s) 
 {
-	TSet a(BitField | s.BitField);
-	return a;
+	TSet A(max(MaxPower, s.GetMaxPower()));
+	A.BitField = BitField | s.BitField;
+	return A;
 }
 
 

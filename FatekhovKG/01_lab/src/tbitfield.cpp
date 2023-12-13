@@ -76,13 +76,16 @@ TBitField& TBitField::operator=(const TBitField& bf) {
 
 int TBitField::operator==(const TBitField& bf) const 
 {
-	if (BitLen != bf.BitLen)
+	if (BitLen != bf.GetLength())
 		return 0;
-	int k = 0;
-	for (int i = 0; i < MemLen; i++)
-		if (pMem[i] != bf.pMem[i]) {
-			return 0;
+	else
+	{
+		for (int i = 0; i < BitLen; ++i)
+		{
+			if (GetBit(i) != bf.GetBit(i))
+				return 0;
 		}
+	}
 	return 1;
 }
 
