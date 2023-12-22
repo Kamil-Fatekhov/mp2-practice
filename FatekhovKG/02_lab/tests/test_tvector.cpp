@@ -19,7 +19,7 @@ TEST(TVector, throws_when_create_vector_with_negative_length)
 
 TEST(TVector, throws_when_create_vector_with_negative_startindex)
 {
-	ASSERT_ANY_THROW(TVector<int> v(5, -2));
+	ASSERT_ANY_THROW(TVector<int> v(5, -3));
 }
 
 TEST(TVector, can_create_copied_vector)
@@ -35,6 +35,13 @@ TEST(TVector, copied_vector_is_equal_to_source_one)
 	v[0] = 4;
 	TVector<int> v1(v);
 	EXPECT_EQ(v,v1); // own mem
+}
+TEST(TVector, copied_vector_has_its_own_memory) {
+	TVector<int> v1(3);
+	v1[0] = 4; v1[1] = 2;
+	TVector<int> v2(v1);
+	v1[1] = 1;
+	EXPECT_NE(v1, v2);
 }
 
 
@@ -91,7 +98,7 @@ TEST(TVector, can_assign_vectors_of_equal_size)
 TEST(TVector, can_assign_vectors_of_different_size)
 {
 	TVector<int> v(5), v1(6);
-	ASSERT_NO_THROW(v = v1); //EXPECT_EQ
+	EXPECT_EQ(0,v==v1); //EXPECT_EQ
 }
 
 TEST(TVector, compare_equal_vectors_return_true)
